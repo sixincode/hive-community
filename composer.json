@@ -1,0 +1,79 @@
+{
+    "name": "sixincode/hive-community",
+    "description": "Package for Community and Subscription management",
+    "keywords": [
+        "sixincode",
+        "laravel",
+        "hive-community"
+    ],
+    "homepage": "https://github.com/sixincode/hive-community",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sixin",
+            "email": "sixincode@6ixin.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "illuminate/contracts": "^9.0",
+        "laravel/jetstream": "^2.12",
+        "sixincode/modules-init": "^1.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^6.0",
+        "orchestra/testbench": "^7.0",
+        "pestphp/pest": "^1.21",
+        "pestphp/pest-plugin-laravel": "^1.1",
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sixincode\\HiveCommunity\\": "src",
+            "Sixincode\\HiveCommunity\\Database\\Factories\\": "database/factories"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Sixincode\\HiveCommunity\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sixincode\\HiveCommunity\\HiveCommunityServiceProvider"
+            ],
+            "aliases": {
+                "HiveCommunity": "Sixincode\\HiveCommunity\\Facades\\HiveCommunity"
+            }
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.packagist.com/sixincode/"
+        },
+        {
+            "packagist.org": false
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
