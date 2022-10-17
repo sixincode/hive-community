@@ -29,8 +29,8 @@ class HiveCommunityServiceProvider extends PackageServiceProvider
 
     public function registerJetstreamModels(): void
     {
-      Jetstream::useUserModel(config('hive-helpers.models.users'));
+      Jetstream::useUserModel(config('hive-helpers.models.user'));
       Jetstream::useTeamModel(config('hive-community.models.group'));
-      Jetstream::useMembershipModel(config('hive-helpers.models.group_membership'));
+      Jetstream::useMembershipModel(config('hive-community.models.group_membership'));
     }
 }
