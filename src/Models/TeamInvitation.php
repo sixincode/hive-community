@@ -8,7 +8,7 @@ use Sixincode\HiveHelpers\Traits\IsActiveTrait;
 use Sixincode\HiveHelpers\Traits\IsDefaultTrait;
 use Sixincode\HiveHelpers\Traits\IsPrivateTrait;
 
-class GroupInvitation extends HiveModel
+class TeamInvitation extends HiveModel
 {
     use HasFactory;
     /**
@@ -29,13 +29,13 @@ class GroupInvitation extends HiveModel
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+    // public function group()
+    // {
+    //      return $this->team();
+    // }
+
     public function team()
     {
-         return $this->group();
-    }
-
-    public function group()
-    {
-        return $this->belongsTo(config('hive-community.models.group'));
+        return $this->belongsTo(config('hive-community.models.team'));
     }
 }

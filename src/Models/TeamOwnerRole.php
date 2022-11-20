@@ -2,7 +2,7 @@
 
 namespace Sixincode\HiveCommunity\Models;
 
-class GroupOwnerRole extends GroupRole
+class TeamOwnerRole extends TeamRole
 {
     /**
      * Create a new role instance.

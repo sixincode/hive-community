@@ -4,7 +4,7 @@ namespace Sixincode\HiveCommunity\Models;
 
 use JsonSerializable;
 
-class GroupRole implements JsonSerializable
+class TeamRole implements JsonSerializable
 {
     /**
      * The key identifier for the role.

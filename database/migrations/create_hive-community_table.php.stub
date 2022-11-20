@@ -18,15 +18,15 @@ return new class extends Migration
         throw new \Exception('Error: config/hive-community.php not loaded. Run [php artisan config:clear] and try again.');
       }
 
-      if(!Schema::hasTable($tableNames['groups'])) {
-            Schema::create($tableNames['groups'], function (Blueprint $table) {
+      if(!Schema::hasTable($tableNames['teams'])) {
+            Schema::create($tableNames['teams'], function (Blueprint $table) {
               $table->id();
               $table->slugField('code');
-              $table->descriptionFieldJson('title');
+              $table->descriptionFieldJson('name');
               $table->descriptionFieldJson('description');
               $table->descriptionFieldJson('users');
               $table->string('type')->nullable();
-              $table->boolean('personal_team');
+              $table->boolean('personal_team')->default(true);
               $table->isFeaturedField();
               $table->isDefaultField();
               $table->isPrivateField();
@@ -74,8 +74,8 @@ return new class extends Migration
            });
         }
 
-     if(!Schema::hasTable($tableNames['membership'])) {
-           Schema::create($tableNames['group_user'], function (Blueprint $table) {
+     if(!Schema::hasTable($tableNames['team_user'])) {
+           Schema::create($tableNames['team_user'], function (Blueprint $table) {
              $table->id();
              $table->foreignId('team_id');
              $table->foreignId('user_id');
@@ -106,6 +106,6 @@ return new class extends Migration
       Schema::dropIfExists($tableNames['owner_role']);
       Schema::dropIfExists($tableNames['channels']);
       Schema::dropIfExists($tableNames['canals']);
-      Schema::dropIfExists($tableNames['groups']);
+      Schema::dropIfExists($tableNames['teams']);
     }
 };

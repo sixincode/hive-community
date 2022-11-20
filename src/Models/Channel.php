@@ -2,7 +2,7 @@
 
 namespace Sixincode\HiveCommunity\Models;
 
-class Channel extends Group
+class Channel extends Team
 {
 
 }
