@@ -24,7 +24,7 @@ class HiveCommunityServiceProvider extends PackageServiceProvider
             ->name('hive-community')
             ->hasConfigFile()
             ->hasViews()
-            ->hasRoutes(['web','user'])
+            ->hasRoutes(['web','user','api'])
             ->hasMigration('create_hive-community_table')
             ->hasCommand(HiveCommunityCommand::class);
 
@@ -46,8 +46,8 @@ class HiveCommunityServiceProvider extends PackageServiceProvider
     public function bootHiveCommunityMiddlewares()
     {
       $router = $this->app->make(Router::class);
-      $router->aliasMiddleware(config('hive-community.routes.user.middlewares.has_team', 'has_team'), Middlewares\HiveCommunityUserHasTeam::class);
-      $router->aliasMiddleware(config('hive-community.routes.user.middlewares.allow_teams', 'allow_teams'), Middlewares\HiveCommunityUserAllowTeams::class);
+      $router->aliasMiddleware('has_team', Middlewares\HiveCommunityUserHasTeam::class);
+      $router->aliasMiddleware('allow_teams', Middlewares\HiveCommunityUserAllowTeams::class);
     }
 
     public function registerJetstreamModels(): void
