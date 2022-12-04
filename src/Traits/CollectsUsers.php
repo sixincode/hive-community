@@ -31,7 +31,7 @@ trait CollectsUsers
         //   $key = ($this->countAllUsers() + 1);
         // }
         $userArray = [];
-        $foreach ($pairValue as $key => $pair) {
+        foreach($pairValue as $key => $pair) {
           $userArray[] =  $pair_value[0].(self::thirdLevelExploder()).$pair_value[1];
         }
         $userData = implode($userArray);

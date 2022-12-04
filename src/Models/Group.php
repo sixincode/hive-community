@@ -2,16 +2,11 @@
 
 namespace Sixincode\HiveCommunity\Models;
 
-use Sixincode\HiveCommunity\Trais\CollectsUsers;
+use Sixincode\HiveCommunity\Traits\CollectsUsers;
+use Sixincode\HiveCommunity\Traits\IsTeam;
 
-class Group extends Team
+class Group extends IsTeam
 {
   use CollectsUsers;
-
-  public static function getTableAttribute()
-  {
-    return config('hive-community.tables_names.teams');
-  }
-
 
 }

@@ -3,6 +3,8 @@
 namespace Sixincode\HiveCommunity\Traits;
 
 use Sixincode\HiveHelpers\Traits\FieldsTrait;
+use Sixincode\HiveCommunity\Models\TeamOwnerRole;
+use Laravel\Jetstream\Jetstream;
 
 trait HasTeams
 {
@@ -28,7 +30,7 @@ trait HasTeams
             $this->switchTeam($this->personalTeam());
         }
 
-        return $this->belongsTo(Jetstream::teamModel(), 'current_team_id');
+        return $this->belongsTo(config('hive-community.models.team'), 'current_team_id');
     }
 
     /**
@@ -69,7 +71,7 @@ trait HasTeams
      */
     public function ownedTeams()
     {
-        return $this->hasMany(Jetstream::teamModel());
+        return $this->hasMany(config('hive-community.models.team'));
     }
 
     /**
@@ -79,7 +81,7 @@ trait HasTeams
      */
     public function teams()
     {
-        return $this->belongsToMany(Jetstream::teamModel(), Jetstream::membershipModel())
+        return $this->belongsToMany(config('hive-community.models.team'), config('hive-community.table_names.team_user'))
                         ->withPivot('role')
                         ->withTimestamps()
                         ->as('membership');
@@ -131,12 +133,13 @@ trait HasTeams
      * Get the role that the user has on the team.
      *
      * @param  mixed  $team
-     * @return \Laravel\Jetstream\Role|null
+     * @return \Sixincode\HiveCommunity\Models\Role|null
      */
     public function teamRole($team)
     {
         if ($this->ownsTeam($team)) {
-            return new OwnerRole;
+            return new TeamOwnerRolenamespace;
+;
         }
 
         if (! $this->belongsToTeam($team)) {

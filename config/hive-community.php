@@ -22,7 +22,7 @@ return [
     'teams'                            => 'teams',
     'team_membership'                  => 'memberships',
     'team_invitation'                  => 'invitations',
-    'team_role'                        => 'user_team',
+    'team_role'                        => 'team_role',
     'team_user'                        => 'team_user',
     ],
   'column_names'    => [
@@ -30,5 +30,35 @@ return [
       'owner_morph_key'                => 'owner_id',
       'owner_morph_type'
     ],
-
+    'routes' => [
+      'central' =>   [
+        'teams' => [
+          'index'  => false,
+          'show'   => false,
+          'create' => false,
+          'delete' => false,
+        ],
+       ],
+      'admin' =>   [
+        'teams' => [
+          'index'  => true,
+          'show'   => true,
+          'create' => true,
+          'delete' => true,
+        ],
+      ],
+       'user' =>   [
+         'middlewares' =>[
+           'allow_teams' => ['allow_teams'],
+           'has_team' => ['has_team'],
+         ],
+         'teams' => [
+           'prefix'  => 'teams',
+           'index'  => true,
+           'show'   => true,
+           'create' => true,
+           'delete' => true,
+         ],
+        ],
+   ],
 ];

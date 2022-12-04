@@ -18,13 +18,28 @@ return new class extends Migration
         throw new \Exception('Error: config/hive-community.php not loaded. Run [php artisan config:clear] and try again.');
       }
 
-      if(!Schema::hasTable($tableNames['teams'])) {
+      if(!Schema::hasTable('users')) {
+        $table->dropColumn('name');
+        $table->string('first_name')->after('id');
+        $table->string('last_name')->after('first_name');
+        $table->string('username')->after('last_name')->unique();
+        $table->string('phone')->after('email')->unique()->nullable();
+        $table->string('provider_id')->after('phone')->unique()->nullable();
+        $table->string('provider_type')->after('provider_id')->unique()->nullable();
+        $table->foreignId('current_tenant_id')->after('provider_type')->nullable();
+        $table->integer('membership_ends_at')->nullable();
+        $table->integer('type')->after('phone')->default(3000);
+        $table->string('global')->unique();
+      }
+
+          if(!Schema::hasTable($tableNames['teams'])) {
             Schema::create($tableNames['teams'], function (Blueprint $table) {
               $table->id();
-              $table->slugField('code');
-              $table->descriptionFieldJson('name');
+              $table->slugField('slug');
+              $table->string('name');
               $table->descriptionFieldJson('description');
               $table->descriptionFieldJson('users');
+              $table->integer('user_id');
               $table->string('type')->nullable();
               $table->boolean('personal_team')->default(true);
               $table->isFeaturedField();
@@ -47,7 +62,7 @@ return new class extends Migration
               $table->id();
               $table->descriptionFieldJson('title');
               $table->descriptionFieldJson('description');
-              $table->slugField('code'));
+              $table->slugField('slug');
               $table->isFeaturedField();
               $table->isDefaultField();
               $table->isPrivateField();
@@ -107,5 +122,12 @@ return new class extends Migration
       Schema::dropIfExists($tableNames['channels']);
       Schema::dropIfExists($tableNames['canals']);
       Schema::dropIfExists($tableNames['teams']);
+      Schema::table('users', function (Blueprint $table) {
+        $table->string('name');
+        $table->dropColumn('first_name');
+        $table->dropColumn('last_name');
+        $table->dropColumn('username');
+        $table->dropColumn('phone');
+    });
     }
 };
