@@ -20,7 +20,6 @@ return [
     'communities'                      => 'communities',
     'channels'                         => 'channels',
     'teams'                            => 'teams',
-    'team_membership'                  => 'memberships',
     'team_invitation'                  => 'invitations',
     'team_role'                        => 'team_role',
     'team_user'                        => 'team_user',

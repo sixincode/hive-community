@@ -17,4 +17,8 @@ class Team extends IsTeam
     return 'name';
   }
 
+  public function getRouteKeyName()
+  {
+      return 'slug';
+  }
 }

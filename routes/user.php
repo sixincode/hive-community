@@ -9,25 +9,15 @@ Route::middleware(
   config('hive-stream.routes.user.prefix', 'home')
 )->name('user.')->group(function () {
 
-    Route::middleware(
-      config('hive-community.routes.user.middlewares.has_team', ['has_team']),
-      config('hive-community.routes.user.middlewares.allow_teams', ['allow_teams']),
-    )->prefix(
-      config('hive-community.routes.user.teams.prefix', 'teams')
-    )->group(function () {
+      Route::get('/teams',  [Controllers\Teams\TeamsController::class, 'indexUserTeam'])
+           ->name('teams.index');
 
-      if(config('hive-community.routes.user.teams.index', false))
-        {
-          Route::get('/',  [Controllers\Teams\TeamsController::class, 'indexUserTeam'])
-               ->name('teams.index');
-        }
+      Route::get('/teams/create',  [Controllers\Teams\TeamsController::class, 'createUserTeam'])
+           ->name('teams.create');
 
-      if(config('hive-community.routes.user.teams.show', false))
-        {
-          Route::get('/{team}',  [Controllers\Teams\TeamsController::class, 'showUserTeam'])
-                ->name('teams.show');
-        }
-    });
+      Route::get('/teams/{team}',  [Controllers\Teams\TeamsController::class, 'showUserTeam'])
+            ->name('teams.show');
 
-
+      Route::get('/teams/{team}/edit',  [Controllers\Teams\TeamsController::class, 'editUserTeam'])
+            ->name('teams.edit');
 });

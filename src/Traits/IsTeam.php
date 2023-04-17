@@ -14,6 +14,7 @@ use Sixincode\HiveHelpers\Traits\HasSlugTrait;
 use Sixincode\HiveHelpers\Events\TeamCreated;
 use Sixincode\HiveHelpers\Events\TeamDeleted;
 use Sixincode\HiveHelpers\Events\TeamUpdated;
+use Sixincode\HiveCommunity\Models\TeamMembership;
 
 abstract class IsTeam extends HiveModel
 {
@@ -27,7 +28,7 @@ abstract class IsTeam extends HiveModel
 
     public static function getTableAttribute()
     {
-      return config('hive-community.tables_names.teams');
+      return config('hive-community.table_names.teams');
     }
 
     /**
@@ -57,8 +58,12 @@ abstract class IsTeam extends HiveModel
      */
     public function users()
     {
-        return $this->belongsToMany(config('hive-alpha.models.users'), config('hive-community.models.team_membership'))
-                        ->withPivot('team_role')
+        return $this->belongsToMany(config('hive-alpha.models.user'),
+                                    config('hive-community.table_names.team_user'),
+                                    // TeamMembership::class,
+                                    // config('hive-community.models.team_membership')
+                                    )
+                        ->withPivot('role')
                         ->withTimestamps()
                         ->as('membership');
     }

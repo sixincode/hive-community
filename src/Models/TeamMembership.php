@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class TeamMembership extends Pivot
 {
-  public static function getTableAttribute()
+  // protected $table = 'reddd';
+
+  protected static function getTableAttribute()
   {
-    return config('hive-posts.tables_names.team_user');
+    return config('hive-community.table_names.team_user');
   }
 }

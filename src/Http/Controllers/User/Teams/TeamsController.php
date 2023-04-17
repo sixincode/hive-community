@@ -11,8 +11,16 @@ class TeamsController extends Controller
     return view('hive-community::user.teams.indexUserTeam');
   }
 
-  public function showUserTeam()
+  public function showUserTeam($team)
   {
-    return view('hive-community::user.teams.showUserTeam');
+    return view('hive-community::user.teams.showUserTeam',[
+      'team' => $team
+    ]);
   }
+
+  public function createUserTeam()
+  {
+    return view('hive-community::user.teams.createUserTeam');
+  }
+
 }

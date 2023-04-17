@@ -81,7 +81,9 @@ trait HasTeams
      */
     public function teams()
     {
-        return $this->belongsToMany(config('hive-community.models.team'), config('hive-community.table_names.team_user'))
+        return $this->belongsToMany(
+                        config('hive-community.models.team'), 
+                        config('hive-community.table_names.team_user'))
                         ->withPivot('role')
                         ->withTimestamps()
                         ->as('membership');

@@ -32,73 +32,27 @@ return new class extends Migration
         $table->string('global')->unique();
       }
 
-          if(!Schema::hasTable($tableNames['teams'])) {
-            Schema::create($tableNames['teams'], function (Blueprint $table) {
-              $table->id();
-              $table->slugField('slug');
-              $table->string('name');
-              $table->descriptionFieldJson('description');
-              $table->descriptionFieldJson('users');
-              $table->integer('user_id');
-              $table->string('type')->nullable();
-              $table->boolean('personal_team')->default(true);
-              $table->isFeaturedField();
-              $table->isDefaultField();
-              $table->isPrivateField();
-              $table->isActiveField();
-              $table->sortOrderField();
-              $table->globalUserField();
-              $table->propertiesSchemaField();
-              $table->dataSchemaField();
-              $table->globalField();
-              $table->morphToOwner();
-              $table->softDeletes();
-              $table->timestamps();
-            });
-          }
+      if(!Schema::hasTable($tableNames['teams'])) {
+        Schema::create($tableNames['teams'], function (Blueprint $table) {
+           $table->addTeamFields();
+        });
+      }
 
       if(!Schema::hasTable($tableNames['canals'])) {
-            Schema::create($tableNames['canals'], function (Blueprint $table) {
-              $table->id();
-              $table->descriptionFieldJson('title');
-              $table->descriptionFieldJson('description');
-              $table->slugField('slug');
-              $table->isFeaturedField();
-              $table->isDefaultField();
-              $table->isPrivateField();
-              $table->isActiveField();
-              $table->sortOrderField();
-              $table->globalUserField();
-              $table->propertiesSchemaField();
-              $table->dataSchemaField();
-              $table->globalField();
-              $table->softDeletes();
-              $table->timestamps();
-            });
-         }
+          Schema::create($tableNames['canals'], function (Blueprint $table) {
+            $table->addCanalFields();
+          });
+       }
 
      if(!Schema::hasTable($tableNames['channels'])) {
            Schema::create($tableNames['channels'], function (Blueprint $table) {
-             $table->id();
-             $table->descriptionFieldJson('title');
-             $table->descriptionFieldJson('description');
-             $table->foreignId('canal_id')->nullable();
-             $table->string('type')->nullable();
-             $table->isFeaturedField();
-             $table->sortOrderField();
+             $table->addChanelFields();
            });
         }
 
      if(!Schema::hasTable($tableNames['team_user'])) {
            Schema::create($tableNames['team_user'], function (Blueprint $table) {
-             $table->id();
-             $table->foreignId('team_id');
-             $table->foreignId('user_id');
-             $table->string('role')->nullable();
-             $table->isFeaturedField();
-             $table->isDefaultField();
-             $table->isPrivateField();
-             $table->timestamps();
+             $table->addTeamUserFields();
            });
          }
 
@@ -119,9 +73,11 @@ return new class extends Migration
 
       Schema::dropIfExists($tableNames['membership']);
       Schema::dropIfExists($tableNames['owner_role']);
+
       Schema::dropIfExists($tableNames['channels']);
       Schema::dropIfExists($tableNames['canals']);
       Schema::dropIfExists($tableNames['teams']);
+      Schema::dropIfExists($tableNames['team_user']);
       Schema::table('users', function (Blueprint $table) {
         $table->string('name');
         $table->dropColumn('first_name');

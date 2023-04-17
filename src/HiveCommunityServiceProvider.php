@@ -10,38 +10,71 @@ use Sixincode\HiveCommunity\Http\Livewire as HiveCommunityLivewire;
 use Sixincode\HiveCommunity\Http\Middlewares as Middlewares;
 use Livewire\Livewire;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Blade;
+use Sixincode\HiveCommunity\Traits\HiveCommunityDatabase;
+use Illuminate\Database\Schema\Blueprint;
 
 class HiveCommunityServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/sixincode/hive-template
-         */
-        $package
+      $package
             ->name('hive-community')
-            ->hasConfigFile()
+            ->hasConfigFile(['hive-community','hive-community-components'])
             ->hasViews()
             ->hasRoutes(['web','user','api'])
             ->hasMigration('create_hive-community_table')
             ->hasCommand(HiveCommunityCommand::class);
 
-        $this->registerJetstreamModels();
+      $this->registerHiveCommunityDatabaseMethods();
+      $this->registerJetstreamModels();
     }
 
     public function bootingPackage()
     {
-      $this->bootHiveCommunityLivewireComponents();
       $this->bootHiveCommunityMiddlewares();
     }
 
-    public function bootHiveCommunityLivewireComponents()
+    public function packageBooted()
     {
-      Livewire::component('hive-community-user-team-index', HiveCommunityLivewire\User\Teams\IndexTeam::class);
-      Livewire::component('hive-community-user-team-show', HiveCommunityLivewire\User\Teams\ShowTeam::class);
+      $this->bootHiveCommunityBladeAndLivewireComponents();
     }
+
+    private function registerHiveCommunityDatabaseMethods(): void
+    {
+      Blueprint::macro('addTeamFields', function () {
+        HiveCommunityDatabase::addTeamFields();
+      });
+
+      Blueprint::macro('addCanalFields', function () {
+        HiveCommunityDatabase::addCanalFields();
+      });
+
+      Blueprint::macro('addChanelFields', function () {
+        HiveCommunityDatabase::addChanelFields();
+      });
+
+      Blueprint::macro('addTeamUserFields', function () {
+        HiveCommunityDatabase::addTeamUserFields();
+      });
+    }
+
+
+    public function bootHiveCommunityBladeAndLivewireComponents()
+    {
+       $prefix = config('hive-community-components.prefix', 'hive-calendar');
+       foreach (config('hive-community-components.livewire', []) as $alias => $component)
+       {
+          $alias = $prefix ? "$prefix-$alias" : $alias;
+          Livewire::component($alias, $component);
+       }
+
+       foreach (config('hive-community-components.blade', []) as $alias => $component)
+       {
+          $alias = $prefix ? "$prefix-$alias" : $alias;
+          Blade::component($alias, $component);
+       }
+     }
 
     public function bootHiveCommunityMiddlewares()
     {
@@ -54,6 +87,7 @@ class HiveCommunityServiceProvider extends PackageServiceProvider
     {
       Jetstream::useUserModel('App\Models\User');
       Jetstream::useTeamModel('Sixincode\HiveCommunity\Models\Team');
-      Jetstream::useMembershipModel('Sixincode\HiveCommunity\Models\TeamMembership');
+      Jetstream::useMembershipModel('Sixincode\H
+      iveCommunity\Models\TeamMembership');
     }
 }
