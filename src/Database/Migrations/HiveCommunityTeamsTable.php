@@ -11,8 +11,8 @@ class HiveCommunityTeamsTable
   public static function up()
   {
       Schema::table('teams', function (Blueprint $table) {
-        $table->dropColumn('name');
-        $table->string('description')->after('name');
+        $table->slugField();
+        $table->string('description')->after('slug');
         $table->descriptionFieldJson('users')->after('description');
         $table->string('type')->after('users')->nullable();
         $table->isFeaturedField();
@@ -38,6 +38,7 @@ class HiveCommunityTeamsTable
   public static function down()
   {
     Schema::table('teams', function (Blueprint $table) {
+        $table->dropColumn('slug');
         $table->dropColumn('description');
         $table->dropColumn('users');
         $table->dropColumn('type');
