@@ -12,7 +12,7 @@ class HiveCommunityTeamsTable
   {
       Schema::table('teams', function (Blueprint $table) {
         $table->slugField();
-        $table->string('description')->after('slug');
+        $table->descriptionFieldJson('description')->after('slug');
         $table->descriptionFieldJson('users')->after('description');
         $table->string('type')->after('users')->nullable();
         $table->isFeaturedField();
