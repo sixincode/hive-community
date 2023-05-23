@@ -26,7 +26,7 @@ class IsTeam extends HiveModel
     use SortOrderTrait;
     use HasSlugTrait;
 
-    public static function getTableAttribute()
+    public function getTable()
     {
       return config('hive-community.table_names.teams');
     }
