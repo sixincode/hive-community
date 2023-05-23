@@ -16,7 +16,7 @@ use Sixincode\HiveHelpers\Events\TeamDeleted;
 use Sixincode\HiveHelpers\Events\TeamUpdated;
 use Sixincode\HiveCommunity\Models\TeamMembership;
 
-abstract class IsTeam extends HiveModel
+class IsTeam extends HiveModel
 {
     use HasOwnerTrait;
     use IsActiveTrait;
