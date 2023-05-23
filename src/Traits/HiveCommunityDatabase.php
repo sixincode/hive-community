@@ -5,6 +5,7 @@ namespace Sixincode\HiveCommunity\Traits;
 use Sixincode\HiveHelpers\Traits\FieldsTrait;
 use Laravel\Jetstream\Jetstream;
 use Illuminate\Database\Schema\Blueprint;
+use Sixincode\HiveCommunity\Database\Migrations\HiveCommunityTeamsTable;
 
 trait HiveCommunityDatabase
 {
@@ -70,6 +71,16 @@ trait HiveCommunityDatabase
     $table->isDefaultField();
     $table->isPrivateField();
     $table->timestamps();
+  }
+
+  public function migrateTeamsUp()
+  {
+    HiveCommunityTeamsTable::up();
+  }
+
+  public function migrateTeamsDown()
+  {
+    HiveCommunityTeamsTable::down();
   }
 
 }
