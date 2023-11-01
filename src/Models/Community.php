@@ -2,11 +2,21 @@
 
 namespace Sixincode\HiveCommunity\Models;
 
-use Sixincode\HiveCommunity\Trais\CollectsUsers;
-use Sixincode\HiveCommunity\Trais\IsTeam;
+use Sixincode\HiveAlpha\Models\HiveModel;
 
-class Community extends IsTeam
+class Community extends Team
 {
-  use CollectsUsers;
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(function ($query) {
+          $query->where(
+             config('hive-community.column_names.reference')
+             config('hive-community.reference_values.community')
+           );
+        });
+    }
 
 }

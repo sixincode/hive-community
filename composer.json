@@ -1,6 +1,6 @@
 {
     "name": "sixincode/hive-community",
-    "description": "Hive Community",
+    "description": "hive-community package",
     "keywords": [
         "sixincode",
         "laravel",
@@ -10,22 +10,30 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Sixin",
+            "name": "sixincode",
             "email": "sixincode@6ixin.com",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.1",
-        "illuminate/contracts": "^10.0"
+        "illuminate/contracts": "^10.0",
+        "sixincode/hive-alpha": "dev-main",
+        "sixincode/hive-display": "dev-main",
+        "sixincode/modules-init": "dev-main"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
-        "nunomaduro/collision": "^6.0",
+        "nunomaduro/collision": "^7.9",
+        "nunomaduro/larastan": "^2.0.1",
         "orchestra/testbench": "^7.7|^8.0",
-        "pestphp/pest": "^1.21",
-        "pestphp/pest-plugin-laravel": "^1.1",
-        "phpunit/phpunit": "^9.5"
+        "pestphp/pest": "^2.0",
+        "pestphp/pest-plugin-arch": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.0",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "spatie/laravel-ray": "^1.26"
     },
     "autoload": {
         "psr-4": {
@@ -48,10 +56,7 @@
         "format": "vendor/bin/pint"
     },
     "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
+        "sort-packages": true
     },
     "extra": {
         "laravel": {

@@ -2,19 +2,38 @@
 
 namespace Sixincode\HiveCommunity\Http\Livewire\User\Teams;
 
+use Illuminate\Support\Facades\Auth;
+use Laravel\Jetstream\Contracts\CreatesTeams;
 use Livewire\Component;
+use Laravel\Jetstream\RedirectsActions;
 
 class CreateTeam extends Component
 {
-  public $team;
+    use RedirectsActions;
 
-  public function mount()
-  {
-    // $this->teams = auth()->user()->teams()->get();
-  }
+    public $state = [];
 
-  public function render()
-  {
-    return view('hive-community::livewire.user.teams.createUserTeam');
-  }
+    public function createTeam(CreatesTeams $creator)
+    {
+      $this->resetErrorBag();
+
+      $creator->create(Auth::user(), $this->state);
+
+      return $this->redirectPath($creator);
+    }
+
+    public function mount()
+    {
+
+    }
+
+    public function getUserProperty()
+    {
+        return Auth::user();
+    }
+
+    public function render()
+    {
+      return view('hive-community::livewire.user.teams.createUserTeam');
+    }
 }

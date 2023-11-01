@@ -8,82 +8,12 @@ return new class extends Migration
 {
     public function up()
     {
-      $tableNames  = config('hive-community.table_names');
-      $columnNames = config('hive-community.column_names');
+        Schema::create('hive-community_table', function (Blueprint $table) {
+            $table->id();
 
-      if (empty($tableNames)) {
-        throw new \Exception('Error: config/hive-community.php not loaded. Run [php artisan config:clear] and try again.');
-      }
-      if (empty($columnNames)) {
-        throw new \Exception('Error: config/hive-community.php not loaded. Run [php artisan config:clear] and try again.');
-      }
+            // add fields
 
-      if(!Schema::hasTable('users')) {
-        $table->dropColumn('name');
-        $table->string('first_name')->after('id');
-        $table->string('last_name')->after('first_name');
-        $table->string('username')->after('last_name')->unique();
-        $table->string('phone')->after('email')->unique()->nullable();
-        $table->string('provider_id')->after('phone')->unique()->nullable();
-        $table->string('provider_type')->after('provider_id')->unique()->nullable();
-        $table->foreignId('current_tenant_id')->after('provider_type')->nullable();
-        $table->integer('membership_ends_at')->nullable();
-        $table->integer('type')->after('phone')->default(3000);
-        $table->string('global')->unique();
-      }
-
-      if(!Schema::hasTable($tableNames['teams'])) {
-        Schema::create($tableNames['teams'], function (Blueprint $table) {
-           $table->addTeamFields();
+            $table->timestamps();
         });
-      }
-
-      if(!Schema::hasTable($tableNames['canals'])) {
-          Schema::create($tableNames['canals'], function (Blueprint $table) {
-            $table->addCanalFields();
-          });
-       }
-
-     if(!Schema::hasTable($tableNames['channels'])) {
-           Schema::create($tableNames['channels'], function (Blueprint $table) {
-             $table->addChanelFields();
-           });
-        }
-
-     if(!Schema::hasTable($tableNames['team_user'])) {
-           Schema::create($tableNames['team_user'], function (Blueprint $table) {
-             $table->addTeamUserFields();
-           });
-         }
-
-    }
-
-
-    public function down()
-    {
-      $tableNames  = config('hive-community.table_names');
-      $columnNames = config('hive-community.column_names');
-
-      if (empty($tableNames)) {
-        throw new \Exception('Error: config/hive-community.php not loaded. Run [php artisan config:clear] and try again.');
-      }
-      if (empty($columnNames)) {
-        throw new \Exception('Error: config/hive-community.php not loaded. Run [php artisan config:clear] and try again.');
-      }
-
-      Schema::dropIfExists($tableNames['membership']);
-      Schema::dropIfExists($tableNames['owner_role']);
-
-      Schema::dropIfExists($tableNames['channels']);
-      Schema::dropIfExists($tableNames['canals']);
-      Schema::dropIfExists($tableNames['teams']);
-      Schema::dropIfExists($tableNames['team_user']);
-      Schema::table('users', function (Blueprint $table) {
-        $table->string('name');
-        $table->dropColumn('first_name');
-        $table->dropColumn('last_name');
-        $table->dropColumn('username');
-        $table->dropColumn('phone');
-    });
     }
 };

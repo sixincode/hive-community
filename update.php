@@ -31,17 +31,14 @@ function run(string $command): string
 function runUpdate(string $commitMessage,string $pushBranch): string
 {
   $shellCmd = 'git add . && git commit -m"'.$commitMessage.'" && git push -u --force origin '.$pushBranch;
-
   run($shellCmd);
-
   return "Repo updated !";
 }
 
 
 $time = time();
 $commitMessage = ask("Commit message : ", "auto-update-{$time}");
-$pushBranch = ask("Push Branch : ");
+$pushBranch = ask("Push Branch : ", "main");
 
 confirm("Commit 'sixincode/hive-community' repo into {$pushBranch} branch with {$commitMessage}' as message ?") &&
-
 runUpdate($commitMessage,$pushBranch );

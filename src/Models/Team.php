@@ -2,23 +2,66 @@
 
 namespace Sixincode\HiveCommunity\Models;
 
-use Sixincode\HiveCommunity\Traits\CollectsUsers;
-use Sixincode\HiveCommunity\Traits\IsTeam;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Jetstream\Events\TeamCreated;
+use Laravel\Jetstream\Events\TeamDeleted;
+use Laravel\Jetstream\Events\TeamUpdated;
+use Laravel\Jetstream\Team as JetstreamTeam;
+use Sixincode\HiveAlpha\Traits\HiveModelTraits;
+use Sixincode\HiveHelpers\Traits as HelperTraits;
 
-class Team extends IsTeam
+class Team extends JetstreamTeam
 {
-  use CollectsUsers;
-  public $translatable = [];
-  public $orderable = [];
-  public $filterable = [];
+    use HiveModelTraits;
+    use HelperTraits\HasCodeTrait;
+    use HelperTraits\HasOwnerTrait;
+    use HelperTraits\HasReferenceTrait;
+    use HelperTraits\IsActiveTrait;
+    use HelperTraits\IsDefaultTrait;
+    use HelperTraits\IsFeaturedTrait;
+    use HelperTraits\IsPrivateTrait;
+    use HelperTraits\SortOrderTrait;
+    use HasFactory;
 
-  public static function slugOriginElement()
-  {
-    return 'name';
-  }
+    public function __construct()
+    {
+      parent::__construct();
+      $this->translatable[] = 'name';
+      $this->translatable[] = 'description';
 
-  public function getRouteKeyName()
-  {
-      return 'slug';
-  }
+      $this->casts['name'] = 'array';
+      $this->casts['description'] = 'array';
+      $this->casts['personal_team'] = 'boolean';
+
+      $this->orderable[] = 'id';
+      $this->orderable[] = 'name';
+      $this->orderable[] = 'type';
+
+      $this->fillable[] = 'name';
+      $this->fillable[] = 'description';
+      $this->fillable[] = 'personal_team';
+      $this->fillable[] = 'type';
+    }
+
+    public $translatable = [];
+    public $filterable = [];
+    public $orderable = [];
+
+
+    /**
+     * The event map for the model.
+     *
+     * @var array<string, class-string>
+     */
+    protected $dispatchesEvents = [
+        'created' => TeamCreated::class,
+        'updated' => TeamUpdated::class,
+        'deleted' => TeamDeleted::class,
+    ];
+
+    public function getTable()
+    {
+      return config('hive-community.table_names.teams');
+    }
+
 }

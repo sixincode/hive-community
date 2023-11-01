@@ -5,29 +5,35 @@ namespace Sixincode\HiveCommunity;
 use Sixincode\ModulesInit\Package;
 use Sixincode\ModulesInit\PackageServiceProvider;
 use Sixincode\HiveCommunity\Commands\HiveCommunityCommand;
-use Laravel\Jetstream\Jetstream;
-use Sixincode\HiveCommunity\Http\Livewire as HiveCommunityLivewire;
-use Sixincode\HiveCommunity\Http\Middlewares as Middlewares;
-use Livewire\Livewire;
-use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
-use Sixincode\HiveCommunity\Traits\HiveCommunityDatabase;
+use Livewire\Livewire;
+use Sixincode\HiveCommunity\Traits\Database as DatabaseTraits;
 use Illuminate\Database\Schema\Blueprint;
 
 class HiveCommunityServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
-      $package
+        /*
+         * This class is a Package Service Provider
+         *
+         * More info: https://github.com/sixincode/hive-template
+         */
+        $package
             ->name('hive-community')
-            ->hasConfigFile(['hive-community','hive-community-components'])
+            ->hasConfigFile(['hive-community','hive-community-components','hive-community-features','hive-community-layouts','hive-community-middlewares','hive-community-views'])
             ->hasViews()
-            ->hasRoutes(['web','user','api'])
+            ->hasAssets()
+            ->hasTranslations()
+            ->hasBladeComponents()
+            // ->hasLayouts()
+            // ->hasIcons()
+            ->hasRoutes(['web','api','admin','user'])
             ->hasMigration('create_hive-community_table')
+            // ->runsMigrations()
             ->hasCommand(HiveCommunityCommand::class);
 
-      $this->registerHiveCommunityDatabaseMethods();
-      $this->registerJetstreamModels();
+            $this->registerHiveCommunityDatabaseMethods();
     }
 
     public function bootingPackage()
@@ -35,59 +41,29 @@ class HiveCommunityServiceProvider extends PackageServiceProvider
       $this->bootHiveCommunityMiddlewares();
     }
 
-    public function packageBooted()
-    {
-      $this->bootHiveCommunityBladeAndLivewireComponents();
-    }
-
     private function registerHiveCommunityDatabaseMethods(): void
     {
-      Blueprint::macro('addTeamFields', function () {
-        HiveCommunityDatabase::addTeamFields();
+      Blueprint::macro('addTeamFields', function (Blueprint $table, $properties = []) {
+        DatabaseTraits\HiveCommunityDatabaseDefinitions::addTeamFields($table, $properties);
       });
 
-      Blueprint::macro('addCanalFields', function () {
-        HiveCommunityDatabase::addCanalFields();
+      Blueprint::macro('addChanelFields', function (Blueprint $table, $properties = []) {
+        DatabaseTraits\HiveCommunityDatabaseDefinitions::addChanelFields($table, $properties);
       });
 
-      Blueprint::macro('addChanelFields', function () {
-        HiveCommunityDatabase::addChanelFields();
+      Blueprint::macro('addTunnelFields', function (Blueprint $table, $properties = []) {
+        DatabaseTraits\HiveCommunityDatabaseDefinitions::addTunnelFields($table, $properties);
       });
 
-      Blueprint::macro('addTeamUserFields', function () {
-        HiveCommunityDatabase::addTeamUserFields();
+      Blueprint::macro('addTeamUserFields', function (Blueprint $table, $properties = []) {
+        DatabaseTraits\HiveCommunityDatabaseDefinitions::addTeamUserFields($table, $properties);
       });
     }
-
-
-    public function bootHiveCommunityBladeAndLivewireComponents()
-    {
-       $prefix = config('hive-community-components.prefix', 'hive-calendar');
-       foreach (config('hive-community-components.livewire', []) as $alias => $component)
-       {
-          $alias = $prefix ? "$prefix-$alias" : $alias;
-          Livewire::component($alias, $component);
-       }
-
-       foreach (config('hive-community-components.blade', []) as $alias => $component)
-       {
-          $alias = $prefix ? "$prefix-$alias" : $alias;
-          Blade::component($alias, $component);
-       }
-     }
 
     public function bootHiveCommunityMiddlewares()
     {
       $router = $this->app->make(Router::class);
       $router->aliasMiddleware('has_team', Middlewares\HiveCommunityUserHasTeam::class);
       $router->aliasMiddleware('allow_teams', Middlewares\HiveCommunityUserAllowTeams::class);
-    }
-
-    public function registerJetstreamModels(): void
-    {
-      Jetstream::useUserModel('App\Models\User');
-      Jetstream::useTeamModel('Sixincode\HiveCommunity\Models\Team');
-      Jetstream::useMembershipModel('Sixincode\H
-      iveCommunity\Models\TeamMembership');
     }
 }

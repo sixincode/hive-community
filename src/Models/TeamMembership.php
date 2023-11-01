@@ -2,13 +2,19 @@
 
 namespace Sixincode\HiveCommunity\Models;
 
-use Illuminate\Database\Eloquent\Relations\Pivot;
+use Sixincode\HiveAlpha\Models\HiveModel;
+use Laravel\Jetstream\Membership as JetstreamMembership;
 
-class TeamMembership extends Pivot
+class TeamMembership extends JetstreamMembership
 {
-  // protected $table = 'reddd';
+  /**
+   * Indicates if the IDs are auto-incrementing.
+   *
+   * @var bool
+   */
+  public $incrementing = true;
 
-  protected static function getTableAttribute()
+  public function getTable()
   {
     return config('hive-community.table_names.team_user');
   }

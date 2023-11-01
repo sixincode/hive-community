@@ -6,16 +6,13 @@ use Livewire\Component;
 
 class IndexTeam extends Component
 {
-  public $teams;
+    public function mount()
+    {
 
-  public function mount()
-  {
-    $this->teams = auth()->user()->allTeams();
-    // $this->teams = auth()->user()->teams()->get();
-  }
+    }
 
-  public function render()
-  {
-    return view('hive-community::livewire.user.teams.indexUserTeam');
-  }
+    public function render()
+    {
+      return view('hive-community::livewire.user.teams.indexUserTeam');
+    }
 }

@@ -2,9 +2,10 @@
 
 namespace Sixincode\HiveCommunity;
 
-use Sixincode\HiveCommunity\Traits\HiveCommunityDatabase;
+use Sixincode\HiveCommunity\Traits\Database as DatabaseTrait;
 
 class HiveCommunity
 {
-  use HiveCommunityDatabase;
+  use DatabaseTrait\HiveCommunityMigrationsTrait;
+  use DatabaseTrait\HiveCommunitySeedersTrait;
 }

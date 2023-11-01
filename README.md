@@ -1,3 +1,3 @@
-# Package for Community and Subscription management
+# hive-community package
 
 sixincode template for hive serie packages.
