@@ -3,12 +3,15 @@
 namespace Sixincode\HiveCommunity\Http\Livewire\User\Teams;
 
 use Livewire\Component;
+use Sixincode\HiveCommunity\Models\Team;
 
 class ShowTeam extends Component
 {
-    public function mount()
-    {
+    public Team $team;
 
+    public function mount(Team $team)
+    {
+      $this->team = $team;
     }
 
     public function render()

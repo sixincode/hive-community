@@ -1,7 +1,6 @@
 <div>
    <x-hive-display-section component='boxedSection' class="p-0">
-    <x-hive-display-section component='dividedSection' class='p-0'>
-     <x-slot name="mainSec">
+
        <x-hive-display-form-layout route="createTeam" type="livewire">
          <x-slot name="title">
              {{ __('Team Details') }}
@@ -25,7 +24,6 @@
 
              <div class="col-span-6 sm:col-span-4">
                <x-hive-form-input
-                 component="winny"
                  name="name"
                  type="name"
                  placeholder="{{__('Team Name')}}"
@@ -34,9 +32,6 @@
                  wire:model="state.name" autofocus
                  id="name"/>
 
-                 <!-- <x-label for="name" value="{{ __('Team Name') }}" />
-                 <x-input id="name" type="text" class="mt-1 block w-full" wire:model="state.name" autofocus />
-                 <x-input-error for="name" class="mt-2" /> -->
              </div>
 
              <div class="col-span-6 sm:col-span-4">
@@ -56,10 +51,6 @@
              </x-button>
          </x-slot>
       </x-hive-display-form-layout>
-     </x-slot>
-     <x-slot name="secondSec">
 
-     </x-slot>
-   </x-hive-display-section>
   </x-hive-display-section>
 </div>

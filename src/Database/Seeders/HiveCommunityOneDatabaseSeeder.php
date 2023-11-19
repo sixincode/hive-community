@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Faker\Provider\fr_FR\Text as TextFR;
 use Sixincode\HiveHelpers\Traits\FieldsTrait;
 use App\Models\User;
-use App\Models\Team;
+use Sixincode\HiveCommunity\Models\Team;
 use Sixincode\HivePosts\Models\Category;
 use Sixincode\HivePosts\Models\Tag;
 use Sixincode\HiveCommunity\Models\Model;
@@ -23,24 +23,26 @@ class HiveCommunityOneDatabaseSeeder extends Seeder
    //  $faker = \Faker\Factory::create();
    //  $fakerFR = \Faker\Factory::create('fr_FR');
    //
-   $user = User::whereEmail('admin@admin.com')->first();
-   $team  = [
-        'name'   => [
-          'en' => 'Main Admin',
-          'fr' => 'Admin Principal',
-        ],
-        'description'   => [
-          'en' => 'Admin user',
-          'fr' => 'Admin usager',
-        ],
-        'code'          => check_getDefaultTeamCode(),
-        'reference'     => check_getMainTeamReference(),
-        'owner_type'    => User::class,
-        'owner_id'      => $user->getIdKey(),
-        'personal_team' => false,
-    ];
-    $defaultTeam = Team::firstOrCreate($team);
-    $user->ownedTeams()->save($defaultTeam);
+   // $user = User::whereEmail('admin@admin.com')->first();
+   // $team  = [
+   //      "name"   => [
+   //        "en" => "Main Admin",
+   //        "fr" => "Admin Principal",
+   //      ],
+   //      "description"   => [
+   //        "en" => "Admin User",
+   //        "fr" => "Usager Admin",
+   //      ],
+   //      'code'          => check_getDefaultCommunityCode(),
+   //      'reference'     => check_getMainCommunityReference(),
+   //      'owner_type'    => User::class,
+   //      'owner_id'      => $user->getIdKey(),
+   //      'user_id'       => $user->getIdKey(),
+   //      'personal_team' => true,
+   //      'user_global'   => $user->global,
+   //  ];
+   //  $defaultTeam = Team::create($team);
+   //  $user->ownedTeams()->save($defaultTeam);
 
 
   }

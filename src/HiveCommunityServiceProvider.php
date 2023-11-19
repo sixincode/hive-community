@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire;
 use Sixincode\HiveCommunity\Traits\Database as DatabaseTraits;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Routing\Router;
+use Illuminate\Foundation\AliasLoader;
 
 class HiveCommunityServiceProvider extends PackageServiceProvider
 {
@@ -28,12 +30,20 @@ class HiveCommunityServiceProvider extends PackageServiceProvider
             ->hasBladeComponents()
             // ->hasLayouts()
             // ->hasIcons()
-            ->hasRoutes(['web','api','admin','user'])
+            ->hasRoutes(['web','api','admin','user','user-teams'])
             ->hasMigration('create_hive-community_table')
             // ->runsMigrations()
             ->hasCommand(HiveCommunityCommand::class);
 
             $this->registerHiveCommunityDatabaseMethods();
+    }
+
+    public function registeringPackage()
+    {
+      $loader = AliasLoader::getInstance();
+      // $loader->alias('App\Models\Team', 'Sixincode\HiveCommunity\Models\Team');
+      $loader->alias('App\Actions\Jetstream\CreateTeam', 'Sixincode\HiveCommunity\Actions\CreateTeam');
+      $loader->alias('App\Actions\Jetstream\UpdateTeamName', 'Sixincode\HiveCommunity\Actions\UpdateTeamName');
     }
 
     public function bootingPackage()
@@ -47,6 +57,10 @@ class HiveCommunityServiceProvider extends PackageServiceProvider
         DatabaseTraits\HiveCommunityDatabaseDefinitions::addTeamFields($table, $properties);
       });
 
+      Blueprint::macro('joinTeamFields', function (Blueprint $table, $properties = []) {
+        DatabaseTraits\HiveCommunityDatabaseDefinitions::joinTeamFields($table, $properties);
+      });
+
       Blueprint::macro('addChanelFields', function (Blueprint $table, $properties = []) {
         DatabaseTraits\HiveCommunityDatabaseDefinitions::addChanelFields($table, $properties);
       });
@@ -57,6 +71,18 @@ class HiveCommunityServiceProvider extends PackageServiceProvider
 
       Blueprint::macro('addTeamUserFields', function (Blueprint $table, $properties = []) {
         DatabaseTraits\HiveCommunityDatabaseDefinitions::addTeamUserFields($table, $properties);
+      });
+
+      Blueprint::macro('joinTeamUserFields', function (Blueprint $table, $properties = []) {
+        DatabaseTraits\HiveCommunityDatabaseDefinitions::joinTeamUserFields($table, $properties);
+      });
+
+      Blueprint::macro('addTeamInvitationFields', function (Blueprint $table, $properties = []) {
+        DatabaseTraits\HiveCommunityDatabaseDefinitions::addTeamInvitationFields($table, $properties);
+      });
+
+      Blueprint::macro('joinTeamInvitationFields', function (Blueprint $table, $properties = []) {
+        DatabaseTraits\HiveCommunityDatabaseDefinitions::joinTeamInvitationFields($table, $properties);
       });
     }
 

@@ -16,11 +16,14 @@ return [
       'user-teams-create'    => HiveCommunityLivewire\User\Teams\CreateTeam::class,
       'user-teams-show'      => HiveCommunityLivewire\User\Teams\ShowTeam::class,
       'user-teams-edit'      => HiveCommunityLivewire\User\Teams\EditTeam::class,
+      'user-teams-edit-name' => HiveCommunityLivewire\User\Teams\EditTeamName::class,
+      'user-teams-member-manage' => HiveCommunityLivewire\User\Teams\TeamMemberManage::class,
 
       'user-communities-index'     => HiveCommunityLivewire\User\Communities\IndexCommunity::class,
       'user-communities-create'    => HiveCommunityLivewire\User\Communities\CreateCommunity::class,
       'user-communities-show'      => HiveCommunityLivewire\User\Communities\ShowCommunity::class,
       'user-communities-edit'      => HiveCommunityLivewire\User\Communities\EditCommunity::class,
+      'user-communities-edit-name' => HiveCommunityLivewire\User\Communities\EditCommunityName::class,
 
       'user-teams-invite-member'    => HiveCommunityLivewire\User\Teams\InviteMember::class,
     ],

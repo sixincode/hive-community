@@ -2,7 +2,6 @@
 
 namespace Sixincode\HiveCommunity\Models;
 
-use Sixincode\HiveAlpha\Models\HiveModel;
 use Laravel\Jetstream\Membership as JetstreamMembership;
 
 class TeamMembership extends JetstreamMembership

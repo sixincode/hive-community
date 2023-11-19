@@ -19,10 +19,10 @@ trait HiveCommunityDatabaseDefinitions
 
   public static function joinTeamFields(Blueprint $table, $properties =[]): void
   {
-    $table->dropColumn('name');
+    // $table->dropColumn('name');
     $table->after('id', function (Blueprint $table) {
+      $table->descriptionFieldJson('name')->change();
       $table->slugField();
-      $table->descriptionFieldJson('name');
       $table->descriptionFieldJson('description');
       $table->globalUserField();
       $table->morphToOwner();

@@ -25,7 +25,10 @@ class HiveCommunityOneTables
       }
 
       if(Schema::hasTable($tableNames['teams'])) {
+        Schema::table($tableNames['teams'], function($table) {
+          // $table->dropColumn('name');
           $table->joinTeamFields($table);
+        });
       }else{
         Schema::create($tableNames['teams'], function (Blueprint $table) {
           $table->addTeamFields($table);
@@ -45,7 +48,9 @@ class HiveCommunityOneTables
       }
 
       if(Schema::hasTable($tableNames['team_user'])) {
+        Schema::table($tableNames['team_user'], function($table) {
           $table->joinTeamUserFields($table);
+        });
       }else{
         Schema::create($tableNames['team_user'], function (Blueprint $table) {
           $table->addTeamUserFields($table);
@@ -53,7 +58,9 @@ class HiveCommunityOneTables
       }
 
       if(Schema::hasTable($tableNames['team_invitation'])) {
+        Schema::table($tableNames['team_invitation'], function($table) {
           $table->joinTeamInvitationFields($table);
+        });
       }else{
         Schema::create($tableNames['team_invitation'], function (Blueprint $table) {
           $table->addTeamInvitationFields($table);

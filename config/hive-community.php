@@ -5,12 +5,13 @@ return [
   // app
   'title'                  => 'hive-community',
   'slogan'                 => 'This is hive-community.',
-  'hasJetstream'           => false,
-  'appInMaintenance'       => false,
-  'appIsComingSoon'        => false,
+  'hasJetstream'           => true,
   'defaultTeamCode'        => '4000',
-  'mainTeamReference'      => 'aggregations',
-  'defaultTeamReference'   => 'teams',
+  'defaultCommunityCode'   => '6000',
+  'mainTeamReference'      => 'publisher',
+  'mainCommunityReference'      => 'aggregation',
+  'defaultTeamReference'   => 'team',
+  'defaultCommunityReference'   => 'community',
 
   // models
   'models'             => [
@@ -45,12 +46,7 @@ return [
   'main_color_h'      => 'red-900',
   'second_color'      => 'yellow-300',
   'color_animation'   => '',
-  // teams
-  'defaultTeamCode'   => 'default_team',
-  // tables
-  'table_names'       => [
-      'tableOne'   => 'tableOne',
-  ],
+
   // columns
   'column_names'      => [
     'reference'     => 'reference',

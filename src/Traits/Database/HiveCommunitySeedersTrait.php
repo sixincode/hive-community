@@ -9,7 +9,7 @@ trait HiveCommunitySeedersTrait
   public function seedAll(): void
   {
     \HiveAlpha::seed();
-    $thid->seed();
+    $this->seed();
     // $thid->seedTwo();
     // $thid->seedthree();
   }

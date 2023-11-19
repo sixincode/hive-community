@@ -2,9 +2,7 @@
 
 namespace Sixincode\HiveCommunity\Models;
 
-use Sixincode\HiveAlpha\Models\HiveModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Laravel\Jetstream\Jetstream;
 use Laravel\Jetstream\TeamInvitation as JetstreamTeamInvitation;
 
 class TeamInvitation extends JetstreamTeamInvitation
@@ -33,7 +31,5 @@ class TeamInvitation extends JetstreamTeamInvitation
   {
       return $this->belongsTo(Team::class);
   }
-
-
 
 }
