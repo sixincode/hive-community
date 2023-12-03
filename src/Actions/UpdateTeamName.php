@@ -23,7 +23,7 @@ class UpdateTeamName implements UpdatesTeamNames
           'name' => ['required', 'string', 'max:255'],
           'description' => ['nullable'],
         ])->validateWithBag('updateTeamName');
-
+ 
         $team->forceFill([
           'name' => $input['name'],
           'description' => $input['description'],

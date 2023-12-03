@@ -48,13 +48,14 @@
 
       @if (Gate::check('update', $team))
           <x-slot name="actions">
-              <x-action-message class="mr-3" on="saved">
+              <x-hive-display-action-message class="mr-3" on="saved">
                   {{ __('Saved.') }}
-              </x-action-message>
+              </x-hive-display-action-message>
 
-              <x-button>
+              <x-hive-form-button tag="button" type="submit">
                   {{ __('Save') }}
-              </x-button>
+              </x-hive-form-button>
+
           </x-slot>
       @endif
   </x-hive-display-form-layout>
